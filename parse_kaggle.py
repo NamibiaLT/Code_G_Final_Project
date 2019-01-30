@@ -3,14 +3,17 @@ import pandas as pd
 # path to file here
 
 
-def add_position_and_employment_status(df):
+def add_position_and_employment_status(df, company_filter=None):
     """
     Return relevant fields. Add new columns for position and whether employee is
     currently employed from job title col.
     """
     df['current_employee'] = df['job-title'].str.split('-').str[0]
     df['position'] = df['job-title'].str.split('-').str[1]
-    return df[['company', 'summary', 'current_employee', 'position', 'pros', 'cons', 'advice-to-mgmt',
+    if company_filter:
+        return reviews[reviews['company'] == company_filter]
+    else:
+        return df[['company', 'summary', 'current_employee', 'position', 'pros', 'cons', 'advice-to-mgmt',
                'overall-ratings', 'work-balance-stars', 'culture-values-stars', 'comp-benefit-stars',
                'senior-mangemnet-stars']]
 

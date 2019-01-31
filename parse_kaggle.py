@@ -49,10 +49,10 @@ def filter_out_null(df, column):
 
 if __name__ == "__main__":
     # Todo: Put all of these in one big fxn
-    reviews = pd.read_csv('../input/employee_reviews.csv', index_col=0)
+    reviews = pd.read_csv('employee_reviews.csv', index_col=0)
     reviews = standardize_null(reviews)
     reviews = add_position_and_employment_status(reviews, 'amazon')
-    reviews = clean_column_for_nlp(reviews, ['summary', 'pros', 'cons', 'advice-to-mgmt'])
+    reviews = clean_columns_for_nlp(reviews, ['summary', 'pros', 'cons', 'advice-to-mgmt'])
 
     # Pull out a df to do analysis with (Company, star column)
     comp_benefit_stars_notnull = filter_out_null(reviews, 'comp-benefit-stars')

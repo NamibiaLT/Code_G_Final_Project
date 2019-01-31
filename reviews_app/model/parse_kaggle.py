@@ -2,9 +2,15 @@ import datetime as dt
 import numpy as np
 import pandas as pd
 from string import punctuation, digits
+from zipfile import ZipFile
 
 PUNCTUATION_MAPPING = str.maketrans("", "", punctuation)
 DIGIT_MAPPING = str.maketrans("", "", digits)
+
+
+def extract_review_data():
+    zipfile = ZipFile('google-amazon-facebook-employee-reviews.zip')
+    zipfile.extractall()
 
 
 def add_position_and_employment_status(df, company_filter=None):
@@ -130,7 +136,7 @@ def filter_out_null(df, column):
 
 
 if __name__ == "__main__":
-    # Todo: Put all of these in one big fxn
+    extract_review_data()
     reviews = pd.read_csv('employee_reviews.csv', index_col=0, na_values=['None', 'none'])
     reviews = add_position_and_employment_status(reviews)
     reviews = clean_columns_for_nlp(reviews, ['summary', 'pros', 'cons', 'advice-to-mgmt'])

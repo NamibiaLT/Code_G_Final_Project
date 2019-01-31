@@ -1,3 +1,3 @@
-from reviews_app import create_app
+from reviews_app.backend import create_app
 
 app = create_app()

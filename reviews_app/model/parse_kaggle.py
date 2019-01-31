@@ -28,13 +28,10 @@ def add_position_and_employment_status(df, company_filter=None):
     """
     df['current_employee'] = df['job-title'].str.split('-').str[0]
     df['position'] = df['job-title'].str.replace('&amp,', '&').str.split('-').str[1]
-    new_df = df[['company', 'location', 'dates', 'summary', 'current_employee', 'position', 'pros', 'cons',
-                 'advice-to-mgmt', 'overall-ratings', 'work-balance-stars', 'culture-values-stars',
-                 'comp-benefit-stars', 'senior-mangemnet-stars']]
     if company_filter:
-        return new_df[new_df['company'].isin(company_filter)]
+        return df[df['company'].isin(company_filter)]
     else:
-        return new_df
+        return df
 
 
 def parse_datetime(dates):

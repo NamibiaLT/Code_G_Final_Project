@@ -75,13 +75,13 @@ def save_images(wordcloud_dict):
             plt.imshow(wordcloud_dict[field][company], interpolation='bilinear')
             plt.axis('off')
             plt.tight_layout(pad=0)
-            plt.savefig(f'images/{company}_{field}.jpg')
+            plt.savefig(f'../../backend/static/images/{company}_{field}.jpg')
 
 
 if __name__ == "__main__":
     """
     Generate word clouds and save the images to the images/ folder in the current working directory
-    >>> python wordcloud.py
+    >>> python generate_wordcloud.py
     """
     wordclouds = get_wordclouds_for_companies()
     save_images(wordclouds)

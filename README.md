@@ -13,3 +13,6 @@ Code_G_Final_Project$ flask run
 Code_G_Final_Project/reviews_app/model$ python parse_kaggle.py
 ```
 Generates file called `employee_reviews.cleaned.csv`
+
+## To install required packages:
+`pip install -r`

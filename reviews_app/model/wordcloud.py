@@ -61,7 +61,7 @@ def get_wordclouds_for_companies(fields=['summary_cleaned', 'pros_cleaned', 'con
 
 def save_images(wordcloud_dict):
     """
-    Save wordcloud images to ./images/ folder. Format of filename is {company}_{field}.jpb
+    Save wordcloud images to ./images/ folder. Format of filename is {company}_{field}.jpg
     """
     for field in wordcloud_dict.keys():
         for company in wordcloud_dict[field].keys():

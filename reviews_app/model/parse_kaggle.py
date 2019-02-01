@@ -179,6 +179,20 @@ def get_cleaned_dataframe(company_filter=None, remove_stopwords=False):
     return reviews
 
 
+def display_random_review(df, company, field):
+    """
+    Display a random review given a company and field
+    Args:
+        df (pd.df): a pandas dataframe containing containing a company and review field
+        company (string): One of the following companies: 'google', 'amazon', 'facebook', 'netflix', 'apple', 'microsoft'
+        field (string): One of the following fields: 'summary', 'pros', 'cons'
+
+    Returns:
+        A random review
+    """
+    return df[df['company'] == company][field].sample()
+
+
 if __name__ == "__main__":
     """
     Run on command line to output csv of cleaned employee_reviews data. Ready for import into pandas

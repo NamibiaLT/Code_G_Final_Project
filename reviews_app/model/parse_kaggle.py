@@ -13,6 +13,9 @@ ENGLISH_WORDS = set(words.words())
 
 
 def extract_review_data():
+    """
+    Unzips the kaggle data, placing 'employee_reviews.csv' in the same directory
+    """
     zipfile = ZipFile('google-amazon-facebook-employee-reviews.zip')
     zipfile.extractall()
 

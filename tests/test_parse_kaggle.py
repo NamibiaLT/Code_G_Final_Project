@@ -2,7 +2,7 @@ import datetime as dt
 import numpy as np
 import nltk
 import pandas as pd
-from Code_G_Final_Project.reviews_app.model import parse_kaggle as pk
+from reviews_app.model import parse_kaggle as pk
 import pytest
 
 from string import punctuation, digits

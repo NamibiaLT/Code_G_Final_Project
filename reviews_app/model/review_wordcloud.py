@@ -1,75 +1,50 @@
-import nltk
-import numpy as np
+from collections import defaultdict
+import matplotlib.pyplot as plt
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
-import parse_kaggle as pk
-stopwords = stopwords.words('english')
-reviews = pk.get_cleaned_dataframe()
+from parse_kaggle import get_cleaned_dataframe
 
-#Creating an array from text in columns pros, cons, and advice to management
-pros_text = np.array(reviews['pros'])
-cons_text = np.array(reviews['cons'])
-advice_text = np.array(reviews['advice-to-mgmt'])
 
-# Clean text for wordclouds
-# Creating empty lists for iterating over text
-pros_cleaned = []
-cons_cleaned = []
-advice_cleaned = []
+CLEANED_REVIEWS = get_cleaned_dataframe()
+COMPANIES = [company for company in CLEANED_REVIEWS['company'].unique()]
+STOPWORDS = set(stopwords.words('english') +
+                ['das', 'es', 'en', 'de', 'la', 'ne', 'ist', 'pour', 'ma', 'vie', 'ce', 'la', 'mir', 'high', 'ever',
+                 'fa', 'un', 'bon', 'belle', 'mos', 'NaN', 'travail', 'den', 'die', 'gestion', 'un', 'ist', 'one',
+                 'start', 'oft', 'bom', 'sind', 'um', 'sur', 'tout', 'bonne', 'na', 'york', 'id', 'dont', 'also', 'inn',
+                 'warehouse', 'place', 'bien', 'name', 'many', 'large', 'none', 'let', 'work', 'company', 'lot', 'job',
+                 'working', 'associate', 'two', 'lots', 'put', 'dtype', 'mon', 'se', 'summary_cleaned', 'wo', 'nach',
+                 'leuk', 'accountant', 'sometimes', 'kind', 'bas', 'bid', 'salle', 'pendant', 'theres', 'bout',
+                 'changement', 'fo', 'encore', 'longue', 'yo', 'th', 'nous', 'welt', 'petit', 'par', 'sie', 'cadre'])
 
-# This saves words that arent in the list of stopwords to the cleaned list
-for w in pros_text: 
-    if w not in stopwords: 
-        pros_cleaned.append(w) 
 
-for w in cons_text: 
-    if w not in stopwords: 
-        cons_cleaned.append(w) 
-    
-for w in advice_text: 
-    if w not in stopwords: 
-        advice_cleaned.append(w) 
+def get_wordclouds_for_companies(fields):
+    df = CLEANED_REVIEWS
+    wordclouds = defaultdict(defaultdict)
+    for field in fields:
+        for company in COMPANIES:
+            wordclouds[field][company] = WordCloud(
+                width=1000,
+                height=1000,
+                stopwords=STOPWORDS
+            ).generate(str(df[df['company'] == company][field]))
+    return wordclouds
 
-#The files created from this are pros_wordcloud.jpg, cons_wordcloud.jpg, and advice_wordcloud.jpg
 
-#wordcloud creation for words in the pros column
-wordcloud = WordCloud(
-    width = 3000,
-    height = 2000,
-    background_color = 'black').generate(str(pros_cleaned))
-fig = plt.figure(
-    figsize = (40, 30),
-    facecolor = 'k',
-    edgecolor = 'k')
-plt.imshow(wordcloud, interpolation = 'bilinear')
-plt.axis('off')
-plt.tight_layout(pad=0)
-plt.savefig('pros_wordcloud.jpg')
+def save_images(wordcloud_dict):
+    for field in wordcloud_dict.keys():
+        for company in wordcloud_dict[field].keys():
 
-#wordcloud creation for words in the cons column
-wordcloud = WordCloud(
-    width = 3000,
-    height = 2000,
-    background_color = 'black').generate(str(cons_cleaned))
-fig = plt.figure(
-    figsize = (40, 30),
-    facecolor = 'k',
-    edgecolor = 'k')
-plt.imshow(wordcloud, interpolation = 'bilinear')
-plt.axis('off')
-plt.tight_layout(pad=0)
-plt.savefig('cons_wordcloud.jpg')
+            plt.imshow(wordcloud_dict[field][company], interpolation='bilinear')
+            plt.axis('off')
+            plt.tight_layout(pad=0)
+            plt.savefig(f'images/{company}_{field}.jpg')
 
-#wordcloud creation for words in the advice to management column
-wordcloud = WordCloud(
-    width = 3000,
-    height = 2000,
-    background_color = 'black').generate(str(advice_cleaned))
-fig = plt.figure(
-    figsize = (40, 30),
-    facecolor = 'k',
-    edgecolor = 'k')
-plt.imshow(wordcloud, interpolation = 'bilinear')
-plt.axis('off')
-plt.tight_layout(pad=0)
-plt.savefig('advice_wordcloud.jpg')
+
+if __name__ == "__main__":
+    """
+    Run on command line 
+    >>> python review_wordcloud.py
+    """
+    wordclouds = get_wordclouds_for_companies(['summary_cleaned', 'pros_cleaned', 'cons_cleaned'])
+    save_images(wordclouds)
+

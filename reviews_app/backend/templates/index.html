@@ -1,12 +1,12 @@
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.scss') }}">
   <title>CODEGIT Project</title>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+  <nav class="grey darken-4" role="navigation">
+    <div class="nav-wrapper container "><a id="logo-container" href="#" class="brand-logo">Employee Review</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Navbar Link</a></li>
       </ul>
@@ -18,22 +18,20 @@
     </div>
   </nav>
   <div class="section no-pad-bot" id="index-banner">
-    <div class="container">
+    <div class="container first">
       <br><br>
       <h1 class="header center orange-text">Starter Template</h1>
       <div class="row center">
-        <h5 class="header col s12 light">A modern responsive front-end framework based on Material Design</h5>
+        <h5 class="header col s12 light">Data analysis of Kaggle Dataset containing employee reviews from Facebook, Google, Apple, Amazon and Microsoft.</h5>
       </div>
       <div class="row center">
-        <a href="http://materializecss.com/getting-started.html" id="download-button" class="btn-large waves-effect waves-light orange">Get
-          Started</a>
           <div class="search-input">
             <input type="text">
             <span class="highlight"></span>
             <span class="bar"></span>
             <label>Search here</label>
-            <span class="glyphicon glyphicon-search"></span>
-            <span class="glyphicon glyphicon-remove"></span>
+            <span class="glyphicon glyphicon-search"><i class="material-icons">search</i></span>
+            <span class="glyphicon glyphicon-remove"><i class="material-icons">clear</i></span>
           </div>
       </div>
       <br><br>
@@ -46,10 +44,10 @@
     <div class="section">
 
       <!--   Icon Section   -->
-      <div class="row">
+       <div class="row">
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">flash_on</i></h2>
+            <h2 class="center light-blue-text"><i class="material-icons">show_chart</i></h2>
             <h5 class="center">Speeds up development</h5>
 
             <p class="light">We did most of the heavy lifting for you to provide a default stylings that incorporate
@@ -64,8 +62,7 @@
             <h5 class="center">User Experience Focused</h5>
 
             <p class="light">By utilizing elements and principles of Material Design, we were able to create a
-              framework that incorporates components and animations that provide more feedback to users. Additionally,
-              a single underlying responsive system across all platforms allow for a more unified user experience.</p>
+              framework that incorporates components and animations that provide more feedback to users.</p>
           </div>
         </div>
 
@@ -89,7 +86,7 @@
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
-          <h5 class="white-text">Company Bio</h5>
+          <h5 class="white-text">About the project</h5>
           <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our
             full time job. Any amount would help support and continue development on this project and is greatly
             appreciated.</p>
@@ -97,37 +94,38 @@
 
         </div>
         <div class="col l3 s12">
-          <h5 class="white-text">Settings</h5>
+          <h5 class="white-text">Resources</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
+            <li><a class="white-text" href="https://www.kaggle.com/petersunga/google-amazon-facebook-employee-reviews/home">Kaggle dataset</a></li>
             <li><a class="white-text" href="#!">Link 2</a></li>
             <li><a class="white-text" href="#!">Link 3</a></li>
             <li><a class="white-text" href="#!">Link 4</a></li>
           </ul>
         </div>
         <div class="col l3 s12">
-          <h5 class="white-text">Connect</h5>
+          <h5 class="white-text">Contributors</h5>
           <ul>
-            <li><a class="white-text" href="#!">Link 1</a></li>
-            <li><a class="white-text" href="#!">Link 2</a></li>
-            <li><a class="white-text" href="#!">Link 3</a></li>
-            <li><a class="white-text" href="#!">Link 4</a></li>
+            <li>Kaye<a class="white-text" href="#!"></a></li>
+            <li>Namibia Torres<a class="white-text" href="#!"></a></li>
+            <li>Nataly Costa<a class="white-text" href="#!"></a></li>
+            <li>Paige Taylor<a class="white-text" href="#!"></a></li>
+            <li>Senay<a class="white-text" href="#!"></li>
+            <li>Vivian<a class="white-text" href="#!"></a></li>
           </ul>
         </div>
       </div>
     </div>
     <div class="footer-copyright">
       <div class="container">
-        Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+        Made with <i class="material-icons">local_cafe</i> and <i class="material-icons"> favorite</i>
       </div>
     </div>
   </footer>
 
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script src="js/materialize.js"></script>
-  <script src="js/init.js"></script>
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="{{url_for('static', filename='js/search.js')}}"></script>
 </body>
 

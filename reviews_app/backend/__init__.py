@@ -5,6 +5,7 @@ import os
 
 #import boto3
 from flask import Flask, render_template
+from flask_scss import Scss
 #from flask_security import Security, SQLAlchemyUserDatastore
 #from flask_bcrypt import Bcrypt
 #from flask_debugtoolbar import DebugToolbarExtension
@@ -54,6 +55,7 @@ def create_app(script_info=None):
         #static_folder="../static",
     )
 
+    Scss(app)
     ### set config
     # app_settings = os.getenv(
     #     "APP_SETTINGS", "coffeeshop.server.config.DevelopmentConfig"

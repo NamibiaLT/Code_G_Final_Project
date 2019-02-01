@@ -132,17 +132,24 @@ def filter_out_null(df, column):
     return df[df[column].notnull()][['company', 'dates', column]]
 
 
-if __name__ == "__main__":
+def get_cleaned_dataframe():
     """
-    Run on command line to output csv of cleaned employee_reviews data. Ready for import into pandas
-    >>> python parse_kaggle.py
+    Puts all the functions together and returns a cleaned dataframe
+    :return:
     """
     extract_review_data()
     reviews = pd.read_csv('employee_reviews.csv', index_col=0, na_values=['None', 'none'])
     reviews = add_position_and_employment_status(reviews)
     reviews = clean_columns_for_nlp(reviews, ['summary', 'pros', 'cons', 'advice-to-mgmt'])
-    reviews.to_csv('employee_reviews.cleaned.csv')
+    return reviews
 
-    # Pull out a df to do analysis with (Company, star column)
-    comp_benefit_stars_notnull = filter_out_null(reviews, 'comp-benefit-stars')
+
+if __name__ == "__main__":
+    """
+    Run on command line to output csv of cleaned employee_reviews data. Ready for import into pandas
+    >>> python parse_kaggle.py
+    """
+    cleaned_df = get_cleaned_dataframe()
+    cleaned_df.to_csv('employee_reviews.cleaned.csv', index=False)
+
 

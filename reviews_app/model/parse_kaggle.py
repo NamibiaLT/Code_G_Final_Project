@@ -182,18 +182,18 @@ def get_cleaned_dataframe(company_filter=None, remove_stopwords=False):
     return reviews
 
 
-def display_random_review(df, company, field):
+def display_random_review(df, company, field='summary'):
     """
     Display a random review given a company and field
     Args:
         df (pd.df): a pandas dataframe containing containing a company and review field
         company (string): One of the following companies: 'google', 'amazon', 'facebook', 'netflix', 'apple', 'microsoft'
-        field (string): One of the following fields: 'summary', 'pros', 'cons'
+        field (string): One of the following fields: 'summary', 'pros', 'cons'. Defaults to summary.
 
     Returns:
-        A random review
+        A random review (str)
     """
-    return df[df['company'] == company][field].sample()
+    return df[df['company'] == company][field].sample().to_string(index=False).strip()
 
 
 if __name__ == "__main__":

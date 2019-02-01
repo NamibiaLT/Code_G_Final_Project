@@ -8,6 +8,9 @@ import pytest
 from string import punctuation, digits
 
 
+NON_ENGLISH_REVIEW = 'um es mit den worten eines kollegen auszudrück sehr'
+
+
 def make_dummy_dataframe():
     companies = ['amazon', 'google', 'facebook']
     job_titles = ['Current Employee - Anonymous Employee', 'Former Employee - Software Engineer', 'Current Employee - Manager']

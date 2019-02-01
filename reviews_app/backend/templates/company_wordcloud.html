@@ -10,6 +10,8 @@
 <body>
 
 
+
+
 <nav class="grey darken-4" role="navigation">
     <div class="nav-wrapper container "><a id="logo-container" href="#" class="brand-logo">Company Review</a>
       <ul class="right hide-on-med-and-down">
@@ -57,7 +59,18 @@
     </div>
     <br><br>
   </div>
+<body>
+<h3>Pros</h3>
 
+{% for pro in pro_list %}
+<li>{{ pro }}</li>
+{% endfor %}
+
+<h3>Cons</h3>
+{% for con in con_list %}
+<li>{{ con }}</li>
+{% endfor %}
+</body>
 
  <footer class="page-footer orange">
     <div class="container">

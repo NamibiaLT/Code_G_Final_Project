@@ -5,8 +5,6 @@ from parse_kaggle import get_cleaned_dataframe
 from wordcloud import WordCloud
 
 
-CLEANED_REVIEWS = get_cleaned_dataframe()
-COMPANIES = [company for company in CLEANED_REVIEWS['company'].unique()]
 STOPWORDS = set(stopwords.words('english') +
                 ['das', 'es', 'en', 'de', 'la', 'ne', 'ist', 'pour', 'ma', 'vie', 'ce', 'la', 'mir', 'high', 'ever',
                  'fa', 'un', 'bon', 'belle', 'mos', 'NaN', 'travail', 'den', 'die', 'gestion', 'un', 'ist', 'one',
@@ -17,12 +15,17 @@ STOPWORDS = set(stopwords.words('english') +
                  'changement', 'fo', 'encore', 'longue', 'yo', 'th', 'nous', 'welt', 'petit', 'par', 'sie', 'cadre'])
 
 
-def get_wordclouds_for_companies(fields=['summary_cleaned', 'pros_cleaned', 'cons_cleaned']):
+def get_wordclouds_for_companies(df=None, fields=['summary_cleaned', 'pros_cleaned', 'cons_cleaned'],
+                                 company_filter=None, width=1000, height=1000):
     """
     Generate word clouds for each of the reviews for each of the companies in the dataframe
     Args:
-        fields (list):  list of review fields to generate wordclouds for. Options = 'summary_cleaned', 'pros_cleaned',
-                        'cons_cleaned'. Defaults to all three.
+        df (pd.df): Dataframe to use for analysis. If none, will generate from employee_reviews.csv
+        fields (list):  optional list of review fields to generate wordclouds for. Options = 'summary_cleaned',
+        'pros_cleaned', 'cons_cleaned'. Defaults to all three.
+        company_filter (list): optional list of companies to limit analysis to. Defaults to None
+        width (int): optional width param for wordcloud
+        height (int): optional height param for wordcloud
     Return:
         A collections.defaultdict object of structure:
 
@@ -47,13 +50,16 @@ def get_wordclouds_for_companies(fields=['summary_cleaned', 'pros_cleaned', 'con
                                  'netflix': <wordcloud.wordcloud.WordCloud object at 0x14612cda0>}})
 
     """
-    df = CLEANED_REVIEWS
+    # If no dataframe is provided, generate from employee_reviews.csv
+    if df is None:
+        df = get_cleaned_dataframe()
+    companies = list(company_filter) if company_filter else [company for company in df['company'].unique()]
     wordclouds = defaultdict(dict)
     for field in fields:
-        for company in COMPANIES:
+        for company in companies:
             wordclouds[field][company] = WordCloud(
-                width=1000,
-                height=1000,
+                width=width,
+                height=height,
                 stopwords=STOPWORDS
             ).generate(str(df[df['company'] == company][field]))
     return wordclouds

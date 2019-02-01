@@ -1,81 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/materialize.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/main.scss') }}">
-  <title>CODEGIT Project</title>
+    <meta charset="UTF-8">
+    <title>{{ company.title() }}</title>
 </head>
 <body>
-  <nav class="grey darken-4" role="navigation">
+
+
+<nav class="grey darken-4" role="navigation">
     <div class="nav-wrapper container "><a id="logo-container" href="#" class="brand-logo">Company Review</a>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">More Info</a></li>
       </ul>
 
       <ul id="nav-mobile" class="sidenav">
-        <li><a href="#">More Info</a></li>
+        <li><a href="#my-footer">More Info</a></li>
       </ul>
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
   </nav>
-  <div class="section no-pad-bot" id="index-banner">
-    <div class="container first">
-      <br><br>
-      <h2 class="header center orange-text">Search for a company</h2>
-      <div class="row center">
-        <h5 class="header col s12 light">Data analysis of Kaggle Dataset containing employee reviews from Facebook, Google, Apple, Amazon and Microsoft.</h5>
-      </div>
-      <div class="row center">
-          <div class="search-input">
-              <form action="/wordcloud">
-            <input type="text" name=company>
-                  <br>
-                  <input type=submit>
-              </form>
-            <span class="highlight"></span>
-            <span class="bar"></span>
-            <label>Search here</label>
-            <span class="glyphicon glyphicon-search"><i class="material-icons">search</i></span>
-            <span class="glyphicon glyphicon-remove"><i class="material-icons">clear</i></span>
-          </div>
-      </div>
-      <br><br>
-
-    </div>
-  </div>
 
 
-  <div class="container">
+ <div class="container">
     <div class="section">
 
       <!--   Icon Section   -->
        <div class="row">
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">show_chart</i></h2>
-            <h5 class="center">Use data to drive your job search</h5>
+            <h5 class="center">{{ company.title() }} Summary</h5>
 
-            <p class="light">
-              With our algorithm, you can can see how employees rate their companies, and share honest feedback about what it will be like working there.
-              Your time is valuable, don't waste it at the wrong company.</p>
+            <img class="responsive-img" src="/static/images/{{ company }}_summary_cleaned.jpg" >
           </div>
         </div>
 
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">group</i></h2>
-            <h5 class="center">Culture focused</h5>
+            <h5 class="center">{{ company.title() }} Pros</h5>
 
-            <p class="light"> Find the company with the right culture fit and teams that make getting up in the morning worthwhile.
-              </p>
+            <img class="responsive-img" src="/static/images/{{ company }}_pros_cleaned.jpg" >
           </div>
         </div>
 
         <div class="col s12 m4">
           <div class="icon-block">
-            <h2 class="center light-blue-text"><i class="material-icons">settings</i></h2>
-            <h5 class="center">Easy to navigate UI</h5>
+            <h5 class="center">{{ company.title() }} Cons</h5>
 
-            <p class="light">Our user interface makes it easy for you to view and understand data about top companies so that you can make informed decisions about where you want to work.</p>
+            <img class="responsive-img" src="/static/images/{{ company }}_cons_cleaned.jpg" >
           </div>
         </div>
       </div>
@@ -84,7 +58,8 @@
     <br><br>
   </div>
 
-  <footer class="page-footer orange">
+
+ <footer class="page-footer orange">
     <div class="container">
       <div class="row">
         <div class="col l6 s12">
@@ -115,18 +90,12 @@
         </div>
       </div>
     </div>
-    <div class="footer-copyright">
+    <div id="my-footer" class="footer-copyright">
       <div class="container">
         Made with <i class="material-icons">local_cafe</i> and <i class="material-icons"> favorite</i>
       </div>
     </div>
   </footer>
-
-
-  <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="{{url_for('static', filename='js/search.js')}}"></script>
 </body>
 
 </html>

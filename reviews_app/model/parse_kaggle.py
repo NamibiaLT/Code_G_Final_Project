@@ -132,14 +132,14 @@ def filter_out_null(df, column):
     return df[df[column].notnull()][['company', 'dates', column]]
 
 
-def get_cleaned_dataframe():
+def get_cleaned_dataframe(company_filter=None):
     """
     Puts all the functions together and returns a cleaned dataframe
     :return:
     """
     extract_review_data()
     reviews = pd.read_csv('employee_reviews.csv', index_col=0, na_values=['None', 'none'])
-    reviews = add_position_and_employment_status(reviews)
+    reviews = add_position_and_employment_status(reviews, company_filter)
     reviews = clean_columns_for_nlp(reviews, ['summary', 'pros', 'cons', 'advice-to-mgmt'])
     return reviews
 

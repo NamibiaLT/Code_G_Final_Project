@@ -1,7 +1,11 @@
 from flask import render_template, Blueprint
 from flask import request
+import pandas as pd
 
 backend_blueprint = Blueprint("backend", __name__)
+NLP_FILE = pd.read_csv("nlp.csv")
+
+
 
 @backend_blueprint.route("/")
 def index():
@@ -17,12 +21,24 @@ def show():
     return render_template('company_results.html', context=data)
 
 
-@backend_blueprint.route("/wordcloud/<company>")
-def wordcloud(company):
-    #company_id = request.args.get("company", type=str)
-    # solutions = solve(company)
-    # return json.dumps(solutions)
-    # return
+def get_nlp(company):
+    # company pro pro pro con con con
+    company = company.lower()
+    df = NLP_FILE
+    company_df = df[df['company'] == company]
+    pro_list = [company_df['p1'].to_string(index=False).strip(), company_df['p2'].to_string(index=False).strip(),
+                company_df['p3'].to_string(index=False).strip()]
+    con_list = [company_df['c1'].to_string(index=False).strip(), company_df['c2'].to_string(index=False).strip(),
+                company_df['c3'].to_string(index=False).strip()]
+    return (pro_list, con_list)
 
-    return render_template('company_results.html', context=data)
+
+@backend_blueprint.route("/wordcloud")
+def company_wordcloud():
+    company = request.args.get("company", type=str).lower()
+    if company in ['amazon', 'google']:
+        pro_list, con_list = get_nlp(company)
+    else:
+        pro_list, con_list = []
+    return render_template('company_wordcloud.html', company=company, pro_list=pro_list, con_list=con_list)
 

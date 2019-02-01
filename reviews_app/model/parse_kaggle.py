@@ -30,6 +30,8 @@ def add_position_and_employment_status(df, company_filter=None):
         pandas dataframe with `current_employee` and `position` pulled out as separate fields
 
     """
+    if company_filter and type(company_filter) != list:
+        raise TypeError("Argument company_filter must be a list! For example, ['amazon']")
     df['current_employee'] = df['job-title'].str.split('-').str[0]
     df['position'] = df['job-title'].str.replace('&amp,', '&').str.split('-').str[1]
     if company_filter:

@@ -1,11 +1,15 @@
 import datetime as dt
 import numpy as np
+import nltk
+from nltk.corpus import stopwords, words
 import pandas as pd
 from string import punctuation, digits
 from zipfile import ZipFile
 
 PUNCTUATION_MAPPING = str.maketrans("", "", punctuation)
 DIGIT_MAPPING = str.maketrans("", "", digits)
+STOPWORDS = stopwords.words('english')
+ENGLISH_WORDS = set(words.words())
 
 
 def extract_review_data():
@@ -60,7 +64,6 @@ def clean_strings(value, ops):
     Return:
         Cleaned value
     """
-
     for function in ops:
         value = function(value)
     return value
@@ -80,7 +83,26 @@ def remove_digits(value):
     return str(value).translate(DIGIT_MAPPING) if pd.notnull(value) else value
 
 
-def clean_columns_for_nlp(df, columns):
+def remove_nonenglish_words(value):
+    """
+    Remove non-English words from reviews
+    """
+    return str(' '.join([word for word in value.split() if word in ENGLISH_WORDS]))
+
+
+def remove_stopwords_from_value(value):
+    """
+    Remove stopwords from string
+
+    Example:
+        >>> remove_stopwords_from_value('not perfect but still the best place in the world to work')
+        'perfect still best place world work'
+
+    """
+    return str(' '.join([word for word in value.split() if word not in STOPWORDS and word in ENGLISH_WORDS]))
+
+
+def clean_columns_for_nlp(df, columns, remove_stopwords=False):
     """
     Prepare & clean data for natural language processing (NLP). This includes removing punctuation & digits,
     lowercasing strings, and converting the `date` field into a parsable date object
@@ -88,15 +110,21 @@ def clean_columns_for_nlp(df, columns):
     Args:
         df (pd.df): pandas dataframe
         columns (list): list of columns to process for NLP
+        remove_stopwords (bool): if provided, remove stopwords from columns
 
     Returns:
         Pandas dataframe that has been processed for NLP
     """
 
-    clean_ops = [str.strip, remove_punctuation, remove_digits, str.lower]
+    clean_ops = [str.lower, remove_punctuation, remove_nonenglish_words, remove_digits, str.strip]
     for column in columns:
         # Need to make a new column for the following columns, leaving original data separate
-        if column in ['pros', 'cons', 'advice-to-mgmt']:
+        if column in ['summary', 'pros', 'cons']:
+            # If remove_stopwords argument provided, then add this function to list of operations before removing
+            # punctuation. Remove `remove_nonenglish_words` operation since this step is included in `remove_stopwords`
+            if remove_stopwords:
+                clean_ops.insert(1, remove_stopwords_from_value)
+                clean_ops.remove(remove_nonenglish_words)
             new_col = column + '_cleaned'
             df[new_col] = df[column].apply(lambda x: clean_strings(x, clean_ops) if pd.notnull(x) else x)
         else:
@@ -132,15 +160,20 @@ def filter_out_null(df, column):
     return df[df[column].notnull()][['company', 'dates', column]]
 
 
-def get_cleaned_dataframe(company_filter=None):
+def get_cleaned_dataframe(company_filter=None, remove_stopwords=False):
     """
     Puts all the functions together and returns a cleaned dataframe
-    :return:
+    Args:
+        company_filter (list): if provided, only return data for list of companies provided. Defaults to None.
+        remove_stopwords (boolean): if True, remove stopwords from review columns. Defaults to False.
+
+    Return:
+        cleaned dataframe
     """
     extract_review_data()
     reviews = pd.read_csv('employee_reviews.csv', index_col=0, na_values=['None', 'none'])
     reviews = add_position_and_employment_status(reviews, company_filter)
-    reviews = clean_columns_for_nlp(reviews, ['summary', 'pros', 'cons', 'advice-to-mgmt'])
+    reviews = clean_columns_for_nlp(reviews, ['summary', 'pros', 'cons'], remove_stopwords)
     return reviews
 
 

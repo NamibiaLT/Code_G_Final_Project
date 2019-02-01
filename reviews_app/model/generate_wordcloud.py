@@ -75,7 +75,7 @@ def save_images(wordcloud_dict):
             plt.imshow(wordcloud_dict[field][company], interpolation='bilinear')
             plt.axis('off')
             plt.tight_layout(pad=0)
-            plt.savefig(f'../../backend/static/images/{company}_{field}.jpg')
+            plt.savefig(f'../backend/static/images/{company}_{field}.jpg')
 
 
 if __name__ == "__main__":

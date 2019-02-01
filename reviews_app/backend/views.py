@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint
-
+from flask import request
 
 backend_blueprint = Blueprint("backend", __name__)
 
@@ -23,4 +23,6 @@ def wordcloud(company):
     # solutions = solve(company)
     # return json.dumps(solutions)
     # return
+
+    return render_template('company_results.html', context=data)
 

@@ -38,7 +38,8 @@ def company_wordcloud():
     company = request.args.get("company", type=str).lower()
     if company in ['amazon', 'google']:
         pro_list, con_list = get_nlp(company)
+        return render_template('company_wordcloud.html', company=company, pro_list=pro_list, con_list=con_list)
     else:
-        pro_list, con_list = []
-    return render_template('company_wordcloud.html', company=company, pro_list=pro_list, con_list=con_list)
+        return render_template('company_wordcloud.html', company=company)
+
 

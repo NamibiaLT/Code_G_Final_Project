@@ -59,18 +59,60 @@
     </div>
     <br><br>
   </div>
-<body>
-<h3>Pros</h3>
+
+
+ <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+       <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+            <h5 class="center">{{ company.title() }} Summary</h5>
+
+            <img class="center" src="/static/images/{{ company }}_tableau.png" width="800px" >
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+
+ <div class="container ">
+    <div class="section">
+
+      <!--   Icon Section   -->
+       <div class="row">
+        <div class="col s12 m4">
+          <div class="icon-block">
+
+            <h5>Pros</h5>
 
 {% for pro in pro_list %}
 <li>{{ pro }}</li>
 {% endfor %}
+          </div>
+        </div>
 
-<h3>Cons</h3>
+        <div class="col s12 m4">
+          <div class="icon-block">
+
+            <h5>Cons</h5>
 {% for con in con_list %}
 <li>{{ con }}</li>
 {% endfor %}
-</body>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+    <br><br>
+  </div>
+
+
 
  <footer class="page-footer orange">
     <div class="container">
